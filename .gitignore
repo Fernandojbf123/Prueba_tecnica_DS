@@ -8,3 +8,9 @@ wheels/
 
 # Virtual environments
 .venv
+
+# datos procesados
+datasets/processed/*
+
+# modelos entrenados
+modelos/*

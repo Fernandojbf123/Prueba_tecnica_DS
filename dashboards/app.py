@@ -4,13 +4,13 @@ import os
 import pandas as pd
 import streamlit as st
 
-
 from functions.load_data import load_csv
+from functions.fill_missing_values import fill_missing_values
+ 
 from functions.side_bar import render_sidebar_filters
 
 from functions.apply_filters import apply_filters
 from functions.get_total import get_top_stores_total
-
 
 from functions.monthly_operations import (
     get_sums_by_selected_column,
@@ -31,7 +31,6 @@ arg_parser = argparse.ArgumentParser()
 arg_parser.add_argument("--version", type=str, default="20261028")
 args, _ = arg_parser.parse_known_args()
 
-
 @st.cache_data
 def load_data(data_version: str) -> pd.DataFrame:
     data_dir = os.path.join(ROOT, "datasets", "raw", data_version)
@@ -49,15 +48,18 @@ def main(version: str):
     st.set_page_config(page_title="Transactions Dashboard", layout="wide")
     st.title("Transactions Dashboard")
 
-    # Load and filter data based on sidebar selections
+    # Cargar los datos
     df = load_data(version)
 
-    # Render sidebar filters and get selected values
+    # Aplicar el relleno de datos faltantes si es necesario
+    df = fill_missing_values(df)
+    
+    # Renderizar la barra lateral de filtros y obtener los valores seleccionados
     filters = render_sidebar_filters(df)
 
-    # Apply filters to the dataframe based on selected sidebar values
+    # Aplicar filtros al dataframe según los valores seleccionados en la barra lateral
     df_filtered =apply_filters(df, filters)
-
+    print(df_filtered)
 
     st.text(f"Las {filters['top_n']} tiendas se eligen por la suma del monto total de las categorías elegidas")
 
@@ -106,12 +108,13 @@ def main(version: str):
 
 
     st.subheader("Comparativas de ventas por:")
+    selected_store_id = st.selectbox(
+            "Selecciona una tienda",
+            options=top_stores_total["store_id"]
+        )
     col3, col4 = st.columns(2)
     # Elija una tienda
-    selected_store_id = st.selectbox(
-        "Selecciona una tienda",
-        options=top_stores_total["store_id"]
-    )
+    
     
     with col3:
         df_sum = get_sums_by_category_and_column_for_store(

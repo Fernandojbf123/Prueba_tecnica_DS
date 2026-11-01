@@ -47,6 +47,7 @@ def get_sums_by_category_and_column_for_store(df: pd.DataFrame, store_id: str, c
         return pd.DataFrame()
 
     df_filtered = df[(df["store_id"] == store_id)].groupby(["category","year","month"])[col].sum().reset_index()
+    # print(df_filtered)
     df_filtered = df_filtered.sort_values(by=["year","month"], ascending=True)
     tspan = pd.to_datetime(df_filtered["year"].astype(str) + "-" + df_filtered["month"].astype(str), format="%Y-%m")
     df_filtered["tspan"] = tspan

@@ -256,6 +256,21 @@ Desde la raíz del proyecto, con Python 3.13 o superior:
 
 Los notebooks usan rutas relativas (`..`), por lo que deben ejecutarse con la carpeta `notebooks/` como directorio de trabajo.
 
+3. Ejecuta el dashboard de Streamlit desde la raíz del proyecto:
+
+   ```
+   uv run streamlit run dashboards/app.py
+   ```
+
+   Por defecto carga los datos de `datasets/raw/20261028/`. Para usar otra versión de los datos, pásala como argumento:
+
+   ```
+   uv run streamlit run dashboards/app.py -- --version 20261028
+   ```
+
+   Streamlit abrirá el dashboard en el navegador (normalmente en `http://localhost:8501`).
+
+
 ### 6.7. Troubleshooting
 
 - Si usas conda u otro gestor, crea un ambiente con Python 3.13 o superior e instala las paqueterías de la tabla de la sección 6.2 con `pip`.

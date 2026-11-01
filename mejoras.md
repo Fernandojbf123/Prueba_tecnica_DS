@@ -1,2 +1,0 @@
-- caso de uso en la industria del retail 
-- análisis descriptivos simples (es mejor) abarcando toda la información (en lugar de hacer estadísticas inferencial)

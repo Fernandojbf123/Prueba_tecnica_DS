@@ -4,7 +4,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
 
-
 def build_preprocessor(X: pd.DataFrame) -> ColumnTransformer:
     """ 
     Construye un preprocesador de datos para columnas categóricas y numéricas.
@@ -43,3 +42,4 @@ def build_preprocessor(X: pd.DataFrame) -> ColumnTransformer:
     ])
 
     return preprocessor
+
